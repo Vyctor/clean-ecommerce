@@ -13,12 +13,7 @@ export class Cpf {
   }
 
   private validate(str: string): boolean {
-    const nullOrUndefined = str === null || str === undefined;
     const invalidLength = str.length < 11 || str.length > 14;
-
-    if (nullOrUndefined) {
-      return false;
-    }
 
     if (invalidLength) {
       return false;

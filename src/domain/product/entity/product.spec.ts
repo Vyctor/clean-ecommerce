@@ -65,4 +65,21 @@ describe('Product Entity Unit Test', () => {
       product.name = '';
     }).toThrowError('Name cannot be empty');
   });
+
+  it('should update a product', () => {
+    const props = {
+      name: 'Product',
+      price: 10,
+    };
+
+    const product = new Product(props);
+
+    // Act
+    product.name = 'Product 1';
+    product.price = 20;
+
+    // Assert
+    expect(product.name).toEqual('Product 1');
+    expect(product.price).toEqual(20);
+  });
 });

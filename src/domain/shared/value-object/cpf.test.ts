@@ -6,7 +6,7 @@ describe('Cpf Value Object Unit Test', () => {
     expect(cpf.value).toBe('700.966.211-84');
   });
 
-  it('should throw an error if the provided value is invalid', () => {
+  it('should throw an error if cpf if invalid', () => {
     expect(() => {
       // eslint-disable-next-line no-new
       new Cpf('700.966.211-85');
