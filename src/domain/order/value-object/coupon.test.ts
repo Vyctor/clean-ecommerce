@@ -40,15 +40,6 @@ describe('Coupon Entity Unit Test', () => {
     expect(() => new Coupon(props)).toThrowError('Percentage must be between 0 and 100');
   });
 
-  it('should not create a coupon with expiration date less than today', () => {
-    const props = {
-      code: 'VALE20',
-      percentage: 20,
-      expirationDate: new Date('2020-12-31'),
-    };
-    expect(() => new Coupon(props)).toThrowError('Expiration date must be greater than today');
-  });
-
   it('should not create a coupon with code less than 3 characters', () => {
     const props = {
       code: 'VA',

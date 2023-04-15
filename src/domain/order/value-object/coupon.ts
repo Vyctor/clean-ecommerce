@@ -42,10 +42,6 @@ export class Coupon extends BaseEntity {
       throw new Error('Percentage must be between 0 and 100');
     }
 
-    if (this._expirationDate.getTime() < new Date().getTime()) {
-      throw new Error('Expiration date must be greater than today');
-    }
-
     if (this._code.length < 3 || this._code.length > 20) {
       throw new Error('Code must have between 3 and 20 characters');
     }

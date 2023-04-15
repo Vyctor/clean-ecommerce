@@ -2,6 +2,7 @@ import { type Product } from '../../product/entity/product';
 import { type Customer } from '../../customer/entity/customer';
 import { BaseEntity } from '../../shared/entity/base-entity';
 import { type Id } from '../../shared/value-object/id';
+import { type Coupon } from '../value-object/coupon';
 
 interface OrderProps {
   id?: Id;
@@ -16,6 +17,8 @@ interface OrderProduct {
 export class Order extends BaseEntity {
   private readonly _customer: Customer;
   private readonly _products: OrderProduct[];
+  private coupon?: Coupon;
+
   constructor(props: OrderProps) {
     super(props.id);
     this._customer = props.customer;
@@ -28,6 +31,11 @@ export class Order extends BaseEntity {
 
   public showCart(): OrderProduct[] {
     return this._products;
+  }
+
+  public addCoupon(coupon: Coupon): void {
+    if (coupon.isExpired()) throw new Error('Coupon is expired');
+    this.coupon = coupon;
   }
 
   public addProduct(product: Product, quantity: number): void {
@@ -49,6 +57,12 @@ export class Order extends BaseEntity {
   }
 
   public calculateTotal(): number {
-    return this._products.reduce((total, product) => total + product.product.price * product.quantity, 0);
+    const total = this._products.reduce((total, product) => total + product.product.price * product.quantity, 0);
+
+    if (this.coupon == null) {
+      return total;
+    }
+
+    return total - (total * this.coupon.percentage) / 100;
   }
 }
